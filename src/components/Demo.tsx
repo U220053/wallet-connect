@@ -713,8 +713,8 @@ import React, { useCallback, useState } from "react";
 import { signIn, signOut, getCsrfToken, useSession } from "next-auth/react";
 import sdk, { SignIn as SignInCore } from "@farcaster/frame-sdk";
 import { Button } from "../components/ui/Button";
-
-const FarcasterLogin = () => {
+//  { title }: { title?: string } = { title: "Frames v2 Demo" }
+const Demo = ({ title }: { title?: string } = { title: "Frames v2 Demo" }) => {
   const [signingIn, setSigningIn] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [signInResult, setSignInResult] = useState<SignInCore.SignInResult>();
@@ -798,4 +798,4 @@ const FarcasterLogin = () => {
   );
 };
 
-export default FarcasterLogin;
+export default Demo;

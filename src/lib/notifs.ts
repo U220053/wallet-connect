@@ -4,7 +4,7 @@ import {
 } from "@farcaster/frame-sdk";
 import { getUserNotificationDetails } from "~/lib/kv";
 
-const appUrl = "https://wallet-connect-iota.vercel.app/" || "";
+const appUrl = "https://wallet-connect-iota.vercel.app/";
 
 type SendFrameNotificationResult =
   | {

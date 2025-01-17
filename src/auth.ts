@@ -49,8 +49,7 @@ export const authOptions: AuthOptions = {
         const verifyResponse = await appClient.verifySignInMessage({
           message: credentials?.message as string,
           signature: credentials?.signature as `0x${string}`,
-          domain: new URL("https://wallet-connect-iota.vercel.app/" ?? "")
-            .hostname,
+          domain: new URL("https://wallet-connect-iota.vercel.app/").hostname,
           nonce: csrfToken,
         });
         const { success, fid } = verifyResponse;
