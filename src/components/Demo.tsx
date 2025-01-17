@@ -309,7 +309,7 @@ export default function Demo(
             <SignIn />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
               <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
                 sdk.actions.openUrl
@@ -334,19 +334,19 @@ export default function Demo(
               </pre>
             </div>
             <ViewProfile />
-          </div>
+          </div> */}
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
               <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
                 sdk.actions.close
               </pre>
             </div>
             <Button onClick={close}>Close Frame</Button>
-          </div>
+          </div> */}
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h2 className="font-2xl font-bold">Last event</h2>
 
           <div className="p-4 mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
@@ -393,7 +393,7 @@ export default function Demo(
               Send notification
             </Button>
           </div>
-        </div>
+        </div> */}
 
         <div>
           <h2 className="font-2xl font-bold">Wallet</h2>
@@ -426,7 +426,7 @@ export default function Demo(
             <SignMessage />
           </div>
 
-          {isConnected && (
+          {/* {isConnected && (
             <>
               <div className="mb-4">
                 <SendEth />
@@ -475,7 +475,7 @@ export default function Demo(
                 {isSwitchChainError && renderError(switchChainError)}
               </div>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>
