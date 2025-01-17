@@ -4,21 +4,21 @@ export async function GET() {
   const config = {
     accountAssociation: {
       header:
-        "eyJmaWQiOjM2MjEsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgyY2Q4NWEwOTMyNjFmNTkyNzA4MDRBNkVBNjk3Q2VBNENlQkVjYWZFIn0",
-      payload: "eyJkb21haW4iOiJmcmFtZXMtdjIudmVyY2VsLmFwcCJ9",
+        "eyJmaWQiOjk0OTQyOSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDJlMWNGOTA2NjYzZjRjYTVBZTlDYzdlQjlFNjFCNTgxMjRkZkQ4MjEifQ",
+      payload: "eyJkb21haW4iOiJ3YWxsZXQtY29ubmVjdC1pb3RhLnZlcmNlbC5hcHAifQ",
       signature:
-        "MHhiNDIwMzQ1MGZkNzgzYTExZjRiOTllZTFlYjA3NmMwOTdjM2JkOTY1NGM2ODZjYjkyZTAyMzk2Y2Q0YjU2MWY1MjY5NjI5ZGQ5NTliYjU0YzEwOGI4OGVmNjdjMTVlZTdjZDc2YTRiMGU5NzkzNzA3YzkxYzFkOWFjNTg0YmQzNjFi",
+        "MHgxODdmZGE1NmFjZDI3ZjdlNWM3ODg5YTc0MzRmMjA1Nzg1NzFjYWRmZTZkMzhhYmRmOTA4ZDVjNDliNzgxZWEzMzM5ZTk5NDVkZDI1NjllOGEwZjM1NjMwMjU1ZTczYjkwYTZmY2JlYTVmM2Q3ZTIxNzFkYzFhNWY3NTc0N2NmMTFj",
     },
     frame: {
       version: "1",
-      name: "Frames v2 Demo",
-      iconUrl: `${appUrl}/icon.png`,
-      homeUrl: appUrl,
-      imageUrl: `${appUrl}/frames/hello/opengraph-image`,
-      buttonTitle: "Launch Frame",
-      splashImageUrl: `${appUrl}/splash.png`,
-      splashBackgroundColor: "#f7f7f7",
-      webhookUrl: `${appUrl}/api/webhook`,
+      name: "Example Frame",
+      iconUrl: "https://wallet-connect-iota.vercel.app/icon.png",
+      homeUrl: "https://wallet-connect-iota.vercel.app",
+      imageUrl: "https://wallet-connect-iota.vercel.app/image.png",
+      buttonTitle: "Check this out",
+      splashImageUrl: "https://wallet-connect-iota.vercel.app/splash.png",
+      splashBackgroundColor: "#eeccff",
+      webhookUrl: "https://wallet-connect-iota.vercel.app/api/webhook",
     },
   };
 
