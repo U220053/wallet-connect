@@ -214,7 +214,7 @@ const SlotMachine = () => {
               clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
             }}
           >
-            SPIN
+            SPINN
           </Button>
         </div>
         <div
