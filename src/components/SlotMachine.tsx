@@ -27,19 +27,19 @@ const SlotMachine = () => {
   const ITEMS_TO_SCROLL = 50; // Number of items to scroll through
 
   const items = [
-    <Image src={globe} alt="globe" className="w-full h-full object-contain" />,
-    <Image src={bomb} alt="bomb" className="w-full h-full object-contain" />,
-    <Image src={book} alt="book" className="w-full h-full object-contain" />,
-    <Image src={broom} alt="broom" className="w-full h-full object-contain" />,
-    <Image src={tonic} alt="tonic" className="w-full h-full object-contain" />,
-    <Image src={gem} alt="gem" className="w-full h-full object-contain" />,
-    <Image src={key} alt="key" className="w-full h-full object-contain" />,
+    <Image src={globe} alt="globe" className="w-full h-8rem  object-contain" />,
+    <Image src={bomb} alt="bomb" className="w-full h-8rem  object-contain" />,
+    <Image src={book} alt="book" className="w-full h-8rem object-contain" />,
+    <Image src={broom} alt="broom" className="w-full h-8rem object-contain" />,
+    <Image src={tonic} alt="tonic" className="w-full h-8rem object-contain" />,
+    <Image src={gem} alt="gem" className="w-full h-8rem object-contain" />,
+    <Image src={key} alt="key" className="w-full h-8rem object-contain" />,
     <Image
       src={champion}
       alt="champion"
-      className="w-full h-full object-contain"
+      className="w-full h-8rem object-contain"
     />,
-    <Image src={coin} alt="coin" className="w-full h-full object-contain" />,
+    <Image src={coin} alt="coin" className="w-full h-8rem object-contain" />,
   ];
 
   const [doors, setDoors] = useState([
@@ -134,14 +134,13 @@ const SlotMachine = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[22rem] ">
+      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[28rem] ">
         <div className="flex gap-4 p-12 rounded-lg shadow-lg">
           {doors.map((door, index) => (
             <div
               key={index}
-              className="door w-20  h-[5rem] overflow-hidden relative"
+              className="door w-28  h-8rem overflow-hidden relative"
             >
-              {/* 11rem */}
               <div
                 className={`boxes flex flex-col transition-transform ease-in-out`}
                 style={{
@@ -159,7 +158,7 @@ const SlotMachine = () => {
                 {door.items.map((item, itemIndex) => (
                   <div
                     key={itemIndex}
-                    className={`box flex items-center justify-center text-6xl bg-white border-2 border-gray-200 h-[60px]
+                    className={`box flex items-center justify-center text-6xl bg-white border-2 border-gray-200 h-[85px]
                     ${
                       itemIndex === Math.floor(ITEMS_TO_SCROLL / 2)
                         ? "border-blue-500"
@@ -174,6 +173,7 @@ const SlotMachine = () => {
           ))}
         </div>
       </div>
+
       <div className="w-1/3 text-center flex flex-col items-center justify-center">
         <p className="mb-2">Spin for 0</p>
 
