@@ -134,7 +134,7 @@ const SlotMachine = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[28rem] ">
+      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[26rem] ">
         <div className="flex gap-4 p-12 rounded-lg shadow-lg">
           {doors.map((door, index) => (
             <div
