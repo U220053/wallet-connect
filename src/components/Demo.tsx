@@ -260,36 +260,37 @@ const Main: React.FC = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="container flex flex-col">
-      {/* Uncomment the below code if ConnectButton is needed */}
-      {/*
+    <div className=" min-h-screen flex items-center justify-center  text-white bg-[#2C0653] bg-[url(/DegenCasinoBg.gif)] bg-cover bg-no-repeat bg-center">
+      <div className="container flex flex-col">
+        {/* Uncomment the below code if ConnectButton is needed */}
+        {/*
       <div className="container flex justify-end mt-4 z-10">
         <ConnectButton />
       </div>
       */}
-      <div
-        style={{
-          paddingTop: context?.client.safeAreaInsets?.top ?? 0,
-          paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
-          paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
-          paddingRight: context?.client.safeAreaInsets?.right ?? 0,
-        }}
-      >
-        <div className="w-[300px] mx-auto py-2 px-2">
-          <div>
-            <h2 className="font-2xl font-bold">Actions</h2>
+        <div
+          style={{
+            paddingTop: context?.client.safeAreaInsets?.top ?? 0,
+            paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
+            paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
+            paddingRight: context?.client.safeAreaInsets?.right ?? 0,
+          }}
+        >
+          <div className="w-[300px] mx-auto py-2 px-2">
+            <div>
+              <h2 className="font-2xl font-bold">Actions</h2>
 
-            <div className="mb-4">
-              <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-                <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                  sdk.actions.signIn
-                </pre>
+              <div className="mb-4">
+                <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
+                  <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
+                    sdk.actions.signIn
+                  </pre>
+                </div>
+                <SignIn />
               </div>
-              <SignIn />
             </div>
-          </div>
-          <div className="mb-20"></div>
-          {/* <div>
+            <div className="mb-20"></div>
+            {/* <div>
             <h2 className="font-2xl font-bold">Wallet</h2>
 
             {address && (
@@ -321,23 +322,19 @@ const Main: React.FC = () => {
               <SignMessage />
             </div>
           </div> */}
+          </div>
         </div>
-      </div>
-      <div className="container flex flex-col gap-y-20 items-center -mt-16">
-        <div className="h-1/4">
-          {/* <img
-            src={mainimg}
-            alt="mainimg"
-            className="w-[25rem] h-full object-cover"
-          /> */}
-          <Image
-            src={mainimg}
-            alt="mainimg"
-            className="w-[25rem] h-full object-cover"
-          />
-        </div>
-        <div className="container h-3/4">
-          <SlotMachine />
+        <div className="container flex flex-col gap-y-12 items-center -mt-16">
+          <div className="h-1/4">
+            <Image
+              src={mainimg}
+              alt="mainimg"
+              className="w-[20rem] h-full object-cover"
+            />
+          </div>
+          <div className="container h-3/4">
+            <SlotMachine />
+          </div>
         </div>
       </div>
     </div>

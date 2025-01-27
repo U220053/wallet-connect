@@ -16,6 +16,7 @@ import { useAccount } from "wagmi";
 import { Dialog } from "primereact/dialog";
 import "./Modal.css";
 import Image from "next/image";
+import { Button2 } from "./ui/Button2";
 
 const SlotMachine = () => {
   // Even shorter spin parameters
@@ -41,22 +42,6 @@ const SlotMachine = () => {
     <Image src={coin} alt="coin" className="w-full h-full object-contain" />,
   ];
 
-  // const items = [
-  //   "🍭",
-  //   "❌",
-  //   "⛄️",
-  //   "🦄",
-  //   "🍌",
-  //   "💩",
-  //   "👻",
-  //   "😻",
-  //   "💵",
-  //   "🤡",
-  //   "🦖",
-  //   "🍎",
-  //   "😂",
-  //   "🖕",
-  // ];
   const [doors, setDoors] = useState([
     { currentIndex: 0, items: items, spinning: false, stopped: false },
     { currentIndex: 0, items: items, spinning: false, stopped: false },
@@ -137,26 +122,26 @@ const SlotMachine = () => {
   };
   return (
     <div className="flex flex-col items-center">
-      {winner && (
-        <div className="font-redhat text-[45.53px] font-black leading-[60.24px] text-left animate-bounce flex flex-row">
-          <p className="mr-2 bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent">
-            JACKPOT
-          </p>
-          {/* <Image src={degen} alt="wallet" className="w-10 h-10 mr-2" /> */}
+      <div className="font-redhat text-2xl font-black leading-[60.24px] text-left animate-bounce flex flex-col items-center">
+        <p className="mr-2 bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent ">
+          JACKPOT
+        </p>
+        <div className="flex flex-row">
           <Image src={degen} alt="wallet" className="w-10 h-10 mr-2" />
-          <p className="bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent">
+          <p className="bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent -mt-3">
             100,000 DEGENS
           </p>
         </div>
-      )}
+      </div>
 
-      <div className="flex flex-col items-center px-8 bg-[url('/Group18.png')] bg-contain bg-no-repeat bg-center w-[50rem] h-2/3">
-        <div className="flex gap-4 p-16 rounded-lg shadow-lg">
+      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[22rem] ">
+        <div className="flex gap-4 p-12 rounded-lg shadow-lg">
           {doors.map((door, index) => (
             <div
               key={index}
-              className="door w-40 h-60 overflow-hidden relative"
+              className="door w-20  h-[5rem] overflow-hidden relative"
             >
+              {/* 11rem */}
               <div
                 className={`boxes flex flex-col transition-transform ease-in-out`}
                 style={{
@@ -189,39 +174,39 @@ const SlotMachine = () => {
           ))}
         </div>
       </div>
+      <div className="w-1/3 text-center flex flex-col items-center justify-center">
+        <p className="mb-2">Spin for 0</p>
 
-      <div className="w-full flex flex-row gap-4 h-1/3 items-center justify-between mb-2 mt-8">
-        <div className="w-1/3 flex items-center -mb-8">
+        <Button2
+          onClick={spin}
+          disabled={spinning}
+          className="text-lg text-white w-[300px] h-[50px] bg-gradient-to-r from-[#D9D9D9] to-[#8B5CF6] shadow-[0_8px_#264BAC,0_60px_25px_rgba(66,112,234,0.19)] transform"
+          style={{
+            clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
+          }}
+        >
+          SPIN
+        </Button2>
+      </div>
+      <div className="w-full flex flex-row gap-4 h-1/3 items-center justify-between mb-2 mt-8 px-2">
+        <div className="w-1/2 flex items-center -mb-8">
           <div className="flex items-center">
-            <div className="w-[13.5rem] h-[4rem] rounded-r-[0.875rem] rounded-l-[2rem] bg-purple-700 text-right flex items-center justify-center text-white relative">
+            <div className="w-[10rem] h-[3rem] rounded-r-[0.875rem] rounded-l-[2rem] bg-purple-700 text-right flex items-center justify-center text-white relative">
               <Image
                 src={degen}
                 alt="wallet"
-                className="w-[4rem] absolute left-0 top-1/2 -translate-y-1/2"
+                className="w-[3rem] absolute left-0 top-1/2 -translate-y-1/2"
               />
-              <div className="-mr-8">Wallet Balance</div>
+              <div className="-mr-8 text-sm">Wallet Balance</div>
             </div>
           </div>
         </div>
-        <div className="w-1/3 text-center flex flex-col items-center justify-center">
-          <p className="mb-2">Spin for 0</p>
 
-          <Button
-            onClick={spin}
-            disabled={spinning || !isConnected}
-            className="text-lg text-white w-[500px] h-[65px] bg-gradient-to-r from-[#D9D9D9] to-[#8B5CF6] shadow-[0_8px_#264BAC,0_60px_25px_rgba(66,112,234,0.19)] transform"
-            style={{
-              clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
-            }}
-          >
-            SPINN
-          </Button>
-        </div>
         <div
-          className="w-1/3 text-center flex items-center justify-center -mb-8"
+          className="w-1/2 text-center flex items-center justify-center -mb-8"
           onClick={openDialog}
         >
-          <Image src={Image1} alt="wallet" className="" />
+          <Image src={Image1} alt="wallet" className="w-25" />
         </div>
       </div>
       <Dialog
