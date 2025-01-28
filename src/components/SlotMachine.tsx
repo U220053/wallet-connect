@@ -588,25 +588,57 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
       hash: txHash as `0x${string}`,
     });
 
+  // const handleBuySpins = async () => {
+  //   try {
+  //     const result = buySpins({
+  //       abi: CASINO_ABI,
+  //       address: CASINO_CONTRACT,
+  //       functionName: "buySpins",
+  //       args: [BigInt(1), BigInt(1e18)],
+  //       value: BigInt(1e18),
+  //     });
+
+  //     if (result !== undefined) {
+  //       setTxHash(result);
+  //       await refetchUserData();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error buying spins:", error);
+  //   }
+  // };
   const handleBuySpins = async () => {
     try {
-      const result = buySpins({
+      const result = await buySpins({
         abi: CASINO_ABI,
         address: CASINO_CONTRACT,
         functionName: "buySpins",
-        args: [BigInt(1), BigInt(1e18)],
+        args: [BigInt(spinCount), BigInt(1e18)],
         value: BigInt(1e18),
       });
 
       if (result !== undefined) {
-        setTxHash(result);
-        await refetchUserData();
+        setTxHash(result); // Set the transaction hash
+        console.log("Transaction hash:", result);
+
+        // Wait for transaction confirmation
+        const receipt = await useWaitForTransactionReceipt(result);
+        if (receipt.status === "success") {
+          await refetchUserData(); // Refresh user data after confirmation
+          console.log("Transaction confirmed, user data refreshed");
+        }
       }
     } catch (error) {
       console.error("Error buying spins:", error);
     }
   };
-
+  useEffect(() => {
+    if (userData) {
+      console.log("User data updated:", userData);
+      // userData[1] contains the spins count
+      const spinsCount = Number(userData[1]);
+      console.log("Current spins count:", spinsCount);
+    }
+  }, [userData]);
   const symbolMapping = {
     globe: 1,
     bomb: 2,
@@ -776,6 +808,11 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
 
   const spin = () => {
     if (spinning) return;
+    // Check if user has spins available
+    if (!userData || Number(userData[1]) <= 0) {
+      console.log("No spins available");
+      return;
+    }
 
     setSpinning(true);
     setWinner(false);
@@ -817,66 +854,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
     }, 50);
   };
 
-  // const spinDoor = (door: any, index: any) => {
-  //   // Generate fewer items for quicker spin
-  //   const newItems = Array.from(
-  //     { length: ITEMS_TO_SCROLL },
-  //     () => items[Math.floor(Math.random() * items.length)]
-  //   );
-
-  //   return {
-  //     ...door,
-  //     items: newItems,
-  //     spinning: index === 0,
-  //     stopped: false,
-  //     currentIndex: 0,
-  //   };
-  // };
-
-  // const spin = () => {
-  //   if (spinning) return;
-
-  //   setSpinning(true);
-  //   setWinner(false);
-
-  //   // Disable transition and reset all doors
-  //   setTransitionEnabled(false);
-  //   setDoors((prevDoors) => prevDoors.map(spinDoor));
-
-  //   // Re-enable transition after a brief delay
-  //   setTimeout(() => {
-  //     setTransitionEnabled(true);
-
-  //     // Sequentially stop reels with reduced timing
-  //     doors.forEach((_, index) => {
-  //       setTimeout(() => {
-  //         setDoors((prevDoors) =>
-  //           prevDoors.map((door, doorIndex) =>
-  //             doorIndex === index
-  //               ? {
-  //                   ...door,
-  //                   spinning: false,
-  //                   stopped: true,
-  //                   currentIndex: Math.floor(ITEMS_TO_SCROLL / 2),
-  //                 }
-  //               : door
-  //           )
-  //         );
-
-  //         // Check for winner after last reel stops
-  //         if (index === doors.length - 1) {
-  //           const finalItems = doors.map(
-  //             (door) => door.items[Math.floor(ITEMS_TO_SCROLL / 2)]
-  //           );
-  //           if (finalItems.every((item) => item === finalItems[0])) {
-  //             setWinner(true);
-  //           }
-  //           setSpinning(false);
-  //         }
-  //       }, SPIN_DURATION + index * STOP_DELAY);
-  //     });
-  //   }, 50);
-  // };
   const openDialog = () => {
     setDialogVisible(true);
   };
@@ -889,7 +866,60 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
 
   return (
     <div className="flex flex-col items-center">
-      {/* ... rest of your JSX ... */}
+      <div className="font-redhat text-2xl font-black leading-[60.24px] text-left animate-bounce flex flex-col items-center">
+        <p className="mr-2 bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent ">
+          JACKPOT
+        </p>
+        <div className="flex flex-row">
+          <Image src={degen} alt="wallet" className="w-10 h-10 mr-2" />
+          <p className="bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent -mt-3">
+            100,000 DEGENS
+          </p>
+        </div>
+      </div>
+      {winner && (
+        <p className="text-green-500">You won {prizeAmount} DEGENS!</p>
+      )}
+      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[26rem] ">
+        <div className="flex gap-4 p-12 rounded-lg shadow-lg">
+          {doors.map((door, index) => (
+            <div
+              key={index}
+              className="door w-28  h-8rem overflow-hidden relative"
+            >
+              <div
+                className={`boxes flex flex-col transition-transform ease-in-out`}
+                style={{
+                  transitionDuration: transitionEnabled
+                    ? `${TRANSITION_DURATION}ms`
+                    : "0ms",
+                  transform:
+                    door.spinning || !door.stopped
+                      ? `translateY(-${door.currentIndex * 60}px)`
+                      : `translateY(-${
+                          Math.floor(ITEMS_TO_SCROLL / 2) * 60
+                        }px)`,
+                }}
+              >
+                {door.items.map((item, itemIndex) => (
+                  <div
+                    key={itemIndex}
+                    className={`box flex items-center justify-center text-6xl bg-white border-2 border-gray-200 h-[85px]
+                    ${
+                      itemIndex === Math.floor(ITEMS_TO_SCROLL / 2)
+                        ? "border-blue-500"
+                        : ""
+                    }`}
+                  >
+                    {item.element}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="w-1/3 text-center flex flex-col items-center justify-center">
         <p className="mb-2">
           Available Spins: {userData ? Number(userData[1]) : 0}
@@ -942,6 +972,33 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
           SPIN
         </Button2>
       </div>
+      <div className="w-full flex flex-row gap-4 h-1/3 items-center justify-between mb-2 mt-8 px-2">
+        <div className="w-1/2 flex items-center -mb-8">
+          <div className="flex items-center">
+            <div className="w-[10rem] h-[3rem] rounded-r-[0.875rem] rounded-l-[2rem] bg-purple-700 text-right flex items-center justify-center text-white relative">
+              <Image
+                src={degen}
+                alt="wallet"
+                className="w-[3rem] absolute left-0 top-1/2 -translate-y-1/2"
+              />
+              <div className="-mr-8 text-sm">Wallet Balance</div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="w-1/2 text-center flex items-center justify-center -mb-8"
+          onClick={openDialog}
+        >
+          <Image src={Image1} alt="wallet" className="w-25" />
+        </div>
+      </div>
+      <Dialog
+        visible={dialogVisible}
+        onHide={hideDialog}
+        closable={false}
+        showHeader={false}
+      ></Dialog>
     </div>
   );
 };
