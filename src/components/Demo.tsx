@@ -33,6 +33,8 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 
 const Main: React.FC = () => {
+  const { status: farcasterStatus, data: session } = useSession();
+
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
   const [isContextOpen, setIsContextOpen] = useState(false);
@@ -234,7 +236,23 @@ const Main: React.FC = () => {
       }
     );
   }, [sendTransaction]);
-
+  const renderUserInfo = () => {
+    return (
+      <div className="mb-4 p-4 bg-gray-800 rounded-lg">
+        <h3 className="text-xl font-bold mb-2">User Info</h3>
+        <div className="space-y-2">
+          <p>Wallet Status: {isConnected ? "Connected" : "Not Connected"}</p>
+          <p>Wallet Address: {address || "Not Connected"}</p>
+          <p>Farcaster Status: {farcasterStatus}</p>
+          {session?.user && (
+            <div>
+              <p>FID: {session.user.fid}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
   const signTyped = useCallback(() => {
     signTypedData({
       domain: {
@@ -262,6 +280,10 @@ const Main: React.FC = () => {
   return (
     <div className=" min-h-screen flex items-center justify-center  text-white bg-[#2C0653] bg-[url(/DegenCasinoBg.gif)] bg-cover bg-no-repeat bg-center">
       <div className="container flex flex-col">
+        <div>{address}</div>
+        <div>{isConnected}</div>
+        {renderUserInfo()}
+
         {/* Uncomment the below code if ConnectButton is needed */}
         {/*
       <div className="container flex justify-end mt-4 z-10">

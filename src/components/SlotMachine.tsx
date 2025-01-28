@@ -19,46 +19,158 @@ import Image from "next/image";
 import { Button2 } from "./ui/Button2";
 
 const SlotMachine = () => {
-  // Even shorter spin parameters
-  const { isConnected } = useAccount();
-  const SPIN_DURATION = 1; // Total spin time (milliseconds)
-  const STOP_DELAY = 150; // Delay between each reel stopping
-  const TRANSITION_DURATION = 250; // CSS transition duration
-  const ITEMS_TO_SCROLL = 50; // Number of items to scroll through
+  const symbolMapping = {
+    globe: 1,
+    bomb: 2,
+    book: 3,
+    broom: 4,
+    tonic: 5,
+    gem: 6,
+    key: 7,
+    champion: 8,
+    coin: 9,
+  };
 
-  const items = [
-    <Image src={globe} alt="globe" className="w-full h-8rem  object-contain" />,
-    <Image src={bomb} alt="bomb" className="w-full h-8rem  object-contain" />,
-    <Image src={book} alt="book" className="w-full h-8rem object-contain" />,
-    <Image src={broom} alt="broom" className="w-full h-8rem object-contain" />,
-    <Image src={tonic} alt="tonic" className="w-full h-8rem object-contain" />,
-    <Image src={gem} alt="gem" className="w-full h-8rem object-contain" />,
-    <Image src={key} alt="key" className="w-full h-8rem object-contain" />,
-    <Image
-      src={champion}
-      alt="champion"
-      className="w-full h-8rem object-contain"
-    />,
-    <Image src={coin} alt="coin" className="w-full h-8rem object-contain" />,
+  const winningCombinations = [
+    { combination: [1, 8, 2], prize: 1000 }, // globe-champion-bomb
+    { combination: [6, 6, 6], prize: 5000 }, // gem-gem-gem
+    { combination: [9, 9, 9], prize: 10000 }, // coin-coin-coin
+    { combination: [8, 8, 8], prize: 7500 }, // champion-champion-champion
+    { combination: [1, 1, 1], prize: 2500 }, // globe-globe-globe
   ];
 
+  // Modified items array to ensure each item has both element and value
+  const baseItems = [
+    {
+      element: (
+        <Image
+          src={globe}
+          alt="globe"
+          className="w-full h-8rem object-contain"
+        />
+      ),
+      value: symbolMapping.globe,
+    },
+    {
+      element: (
+        <Image src={bomb} alt="bomb" className="w-full h-8rem object-contain" />
+      ),
+      value: symbolMapping.bomb,
+    },
+    {
+      element: (
+        <Image src={book} alt="book" className="w-full h-8rem object-contain" />
+      ),
+      value: symbolMapping.book,
+    },
+    {
+      element: (
+        <Image
+          src={broom}
+          alt="broom"
+          className="w-full h-8rem object-contain"
+        />
+      ),
+      value: symbolMapping.broom,
+    },
+    {
+      element: (
+        <Image
+          src={tonic}
+          alt="tonic"
+          className="w-full h-8rem object-contain"
+        />
+      ),
+      value: symbolMapping.tonic,
+    },
+    {
+      element: (
+        <Image src={gem} alt="gem" className="w-full h-8rem object-contain" />
+      ),
+      value: symbolMapping.gem,
+    },
+    {
+      element: (
+        <Image src={key} alt="key" className="w-full h-8rem object-contain" />
+      ),
+      value: symbolMapping.key,
+    },
+    {
+      element: (
+        <Image
+          src={champion}
+          alt="champion"
+          className="w-full h-8rem object-contain"
+        />
+      ),
+      value: symbolMapping.champion,
+    },
+    {
+      element: (
+        <Image src={coin} alt="coin" className="w-full h-8rem object-contain" />
+      ),
+      value: symbolMapping.coin,
+    },
+  ];
+
+  const SPIN_DURATION = 1;
+  const STOP_DELAY = 150;
+  const TRANSITION_DURATION = 250;
+  const ITEMS_TO_SCROLL = 50;
+
   const [doors, setDoors] = useState([
-    { currentIndex: 0, items: items, spinning: false, stopped: false },
-    { currentIndex: 0, items: items, spinning: false, stopped: false },
-    { currentIndex: 0, items: items, spinning: false, stopped: false },
+    { currentIndex: 0, items: baseItems, spinning: false, stopped: false },
+    { currentIndex: 0, items: baseItems, spinning: false, stopped: false },
+    { currentIndex: 0, items: baseItems, spinning: false, stopped: false },
   ]);
 
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(false);
+  const [prizeAmount, setPrizeAmount] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [dialogVisible, setDialogVisible] = useState(false);
 
-  const spinDoor = (door: any, index: any) => {
-    // Generate fewer items for quicker spin
-    const newItems = Array.from(
-      { length: ITEMS_TO_SCROLL },
-      () => items[Math.floor(Math.random() * items.length)]
+  const checkWinningCombination = async (finalSymbols: any[]) => {
+    const combination = finalSymbols.map((item) => item.value);
+    console.log("Checking combination:", combination); // Debug log
+
+    const winningCombo = winningCombinations.find(
+      (combo) =>
+        JSON.stringify(combo.combination) === JSON.stringify(combination)
     );
+
+    if (winningCombo) {
+      setWinner(true);
+      setPrizeAmount(winningCombo.prize);
+
+      try {
+        await fetch("YOUR_API_ENDPOINT", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            combination: combination,
+            prize: winningCombo.prize,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to record prize:", error);
+      }
+    } else {
+      setWinner(false);
+      setPrizeAmount(0);
+    }
+  };
+
+  const spinDoor = (door: any, index: number) => {
+    // Generate new items array while preserving the value property
+    const newItems = Array.from({ length: ITEMS_TO_SCROLL }, () => {
+      const randomItem =
+        baseItems[Math.floor(Math.random() * baseItems.length)];
+      return { ...randomItem }; // Create a new object to avoid reference issues
+    });
 
     return {
       ...door,
@@ -74,45 +186,104 @@ const SlotMachine = () => {
 
     setSpinning(true);
     setWinner(false);
+    setPrizeAmount(0);
 
-    // Disable transition and reset all doors
     setTransitionEnabled(false);
     setDoors((prevDoors) => prevDoors.map(spinDoor));
 
-    // Re-enable transition after a brief delay
     setTimeout(() => {
       setTransitionEnabled(true);
 
-      // Sequentially stop reels with reduced timing
       doors.forEach((_, index) => {
         setTimeout(() => {
           setDoors((prevDoors) =>
-            prevDoors.map((door, doorIndex) =>
-              doorIndex === index
-                ? {
-                    ...door,
-                    spinning: false,
-                    stopped: true,
-                    currentIndex: Math.floor(ITEMS_TO_SCROLL / 2),
-                  }
-                : door
-            )
+            prevDoors.map((door, doorIndex) => {
+              if (doorIndex === index) {
+                const middleIndex = Math.floor(ITEMS_TO_SCROLL / 2);
+                return {
+                  ...door,
+                  spinning: false,
+                  stopped: true,
+                  currentIndex: middleIndex,
+                };
+              }
+              return door;
+            })
           );
 
-          // Check for winner after last reel stops
           if (index === doors.length - 1) {
-            const finalItems = doors.map(
-              (door) => door.items[Math.floor(ITEMS_TO_SCROLL / 2)]
-            );
-            if (finalItems.every((item) => item === finalItems[0])) {
-              setWinner(true);
-            }
+            const finalSymbols = doors.map((door) => {
+              const middleIndex = Math.floor(ITEMS_TO_SCROLL / 2);
+              return door.items[middleIndex];
+            });
+            checkWinningCombination(finalSymbols);
             setSpinning(false);
           }
         }, SPIN_DURATION + index * STOP_DELAY);
       });
     }, 50);
   };
+
+  // const spinDoor = (door: any, index: any) => {
+  //   // Generate fewer items for quicker spin
+  //   const newItems = Array.from(
+  //     { length: ITEMS_TO_SCROLL },
+  //     () => items[Math.floor(Math.random() * items.length)]
+  //   );
+
+  //   return {
+  //     ...door,
+  //     items: newItems,
+  //     spinning: index === 0,
+  //     stopped: false,
+  //     currentIndex: 0,
+  //   };
+  // };
+
+  // const spin = () => {
+  //   if (spinning) return;
+
+  //   setSpinning(true);
+  //   setWinner(false);
+
+  //   // Disable transition and reset all doors
+  //   setTransitionEnabled(false);
+  //   setDoors((prevDoors) => prevDoors.map(spinDoor));
+
+  //   // Re-enable transition after a brief delay
+  //   setTimeout(() => {
+  //     setTransitionEnabled(true);
+
+  //     // Sequentially stop reels with reduced timing
+  //     doors.forEach((_, index) => {
+  //       setTimeout(() => {
+  //         setDoors((prevDoors) =>
+  //           prevDoors.map((door, doorIndex) =>
+  //             doorIndex === index
+  //               ? {
+  //                   ...door,
+  //                   spinning: false,
+  //                   stopped: true,
+  //                   currentIndex: Math.floor(ITEMS_TO_SCROLL / 2),
+  //                 }
+  //               : door
+  //           )
+  //         );
+
+  //         // Check for winner after last reel stops
+  //         if (index === doors.length - 1) {
+  //           const finalItems = doors.map(
+  //             (door) => door.items[Math.floor(ITEMS_TO_SCROLL / 2)]
+  //           );
+  //           if (finalItems.every((item) => item === finalItems[0])) {
+  //             setWinner(true);
+  //           }
+  //           setSpinning(false);
+  //         }
+  //       }, SPIN_DURATION + index * STOP_DELAY);
+  //     });
+  //   }, 50);
+  // };
   const openDialog = () => {
     setDialogVisible(true);
   };
@@ -133,7 +304,9 @@ const SlotMachine = () => {
           </p>
         </div>
       </div>
-
+      {winner && (
+        <p className="text-green-500">You won {prizeAmount} DEGENS!</p>
+      )}
       <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[26rem] ">
         <div className="flex gap-4 p-12 rounded-lg shadow-lg">
           {doors.map((door, index) => (
@@ -165,7 +338,7 @@ const SlotMachine = () => {
                         : ""
                     }`}
                   >
-                    {item}
+                    {item.element}
                   </div>
                 ))}
               </div>
