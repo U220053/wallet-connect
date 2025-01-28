@@ -11,17 +11,6 @@ import sdk, {
   SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
-// import {
-//   useAccount,
-//   useSendTransaction,
-//   useSignMessage,
-//   useSignTypedData,
-//   useWaitForTransactionReceipt,
-//   useDisconnect,
-//   useConnect,
-//   useSwitchChain,
-//   useChainId,
-// } from "wagmi";
 
 import { config } from "~/components/providers/WagmiProvider";
 import { Button } from "~/components/ui/Button";
@@ -53,39 +42,6 @@ const Main: React.FC = () => {
     setNotificationDetails(context?.client.notificationDetails ?? null);
   }, [context]);
 
-  // const { address, isConnected } = useAccount();
-  // const chainId = useChainId();
-
-  // const {
-  //   sendTransaction,
-  //   error: sendTxError,
-  //   isError: isSendTxError,
-  //   isPending: isSendTxPending,
-  // } = useSendTransaction();
-
-  // const { isLoading: isConfirming, isSuccess: isConfirmed } =
-  //   useWaitForTransactionReceipt({
-  //     hash: txHash as `0x${string}`,
-  //   });
-
-  // const {
-  //   signTypedData,
-  //   error: signTypedError,
-  //   isError: isSignTypedError,
-  //   isPending: isSignTypedPending,
-  // } = useSignTypedData();
-
-  // const { disconnect } = useDisconnect();
-  // const { connect } = useConnect();
-
-  // const {
-  //   switchChain,
-  //   error: switchChainError,
-  //   isError: isSwitchChainError,
-  //   isPending: isSwitchChainPending,
-  // } = useSwitchChain();
-
-  // const handleSwitchChain = useCallback(() => {
   //   switchChain({ chainId: chainId === base.id ? optimism.id : base.id });
   // }, [switchChain, chainId]);
 
@@ -190,52 +146,6 @@ const Main: React.FC = () => {
     }
   }, []);
 
-  const sendNotification = useCallback(async () => {
-    setSendNotificationResult("");
-    if (!notificationDetails || !context) {
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/send-notification", {
-        method: "POST",
-        mode: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fid: context.user.fid,
-          notificationDetails,
-        }),
-      });
-
-      if (response.status === 200) {
-        setSendNotificationResult("Success");
-        return;
-      } else if (response.status === 429) {
-        setSendNotificationResult("Rate limited");
-        return;
-      }
-
-      const data = await response.text();
-      setSendNotificationResult(`Error: ${data}`);
-    } catch (error) {
-      setSendNotificationResult(`Error: ${error}`);
-    }
-  }, [context, notificationDetails]);
-
-  // const sendTx = useCallback(() => {
-  //   sendTransaction(
-  //     {
-  //       // call yoink() on Yoink contract
-  //       to: "0x4bBFD120d9f352A0BEd7a014bd67913a2007a878",
-  //       data: "0x9846cd9efc000023c0",
-  //     },
-  //     {
-  //       onSuccess: (hash) => {
-  //         setTxHash(hash);
-  //       },
-  //     }
-  //   );
-  // }, [sendTransaction]);
   const renderUserInfo = () => {
     return (
       <div className="mb-4 p-4 bg-gray-800 rounded-lg">
@@ -253,22 +163,6 @@ const Main: React.FC = () => {
       </div>
     );
   };
-  // const signTyped = useCallback(() => {
-  //   signTypedData({
-  //     domain: {
-  //       name: "Frames v2 Demo",
-  //       version: "1",
-  //       chainId,
-  //     },
-  //     types: {
-  //       Message: [{ name: "content", type: "string" }],
-  //     },
-  //     message: {
-  //       content: "Hello from Frames v2!",
-  //     },
-  //     primaryType: "Message",
-  //   });
-  // }, [chainId, signTypedData]);
 
   const toggleContext = useCallback(() => {
     setIsContextOpen((prev) => !prev);
@@ -317,38 +211,6 @@ const Main: React.FC = () => {
               </div>
             </div>
             <div className="mb-20"></div>
-            {/* <div>
-            <h2 className="font-2xl font-bold">Wallet</h2>
-
-            {address && (
-              <div className="my-2 text-xs">
-                Address:{" "}
-                <pre className="inline">{truncateAddress(address)}</pre>
-              </div>
-            )}
-
-            {chainId && (
-              <div className="my-2 text-xs">
-                Chain ID: <pre className="inline">{chainId}</pre>
-              </div>
-            )}
-
-            <div className="mb-4">
-              <Button
-                onClick={() =>
-                  isConnected
-                    ? disconnect()
-                    : connect({ connector: config.connectors[0] })
-                }
-              >
-                {isConnected ? "Disconnect" : "Connect"}
-              </Button>
-            </div>
-
-            <div className="mb-4">
-              <SignMessage />
-            </div>
-          </div> */}
           </div>
         </div>
         <div className="container flex flex-col gap-y-12 items-center -mt-16">
@@ -369,47 +231,6 @@ const Main: React.FC = () => {
 };
 
 export default Main;
-
-// function SignMessage() {
-//   const { isConnected } = useAccount();
-//   const { connectAsync } = useConnect();
-//   const {
-//     signMessage,
-//     data: signature,
-//     error: signError,
-//     isError: isSignError,
-//     isPending: isSignPending,
-//   } = useSignMessage();
-
-//   const handleSignMessage = useCallback(async () => {
-//     if (!isConnected) {
-//       await connectAsync({
-//         chainId: base.id,
-//         connector: config.connectors[0],
-//       });
-//     }
-
-//     signMessage({ message: "Hello from Frames v2!" });
-//   }, [connectAsync, isConnected, signMessage]);
-
-//   return (
-//     <>
-//       <Button
-//         onClick={handleSignMessage}
-//         disabled={isSignPending}
-//         isLoading={isSignPending}
-//       >
-//         Sign Message
-//       </Button>
-//       {isSignError && renderError(signError)}
-//       {signature && (
-//         <div className="mt-2 text-xs">
-//           <div>Signature: {signature}</div>
-//         </div>
-//       )}
-//     </>
-//   );
-// }
 
 function SignIn() {
   const [signingIn, setSigningIn] = useState(false);
@@ -470,28 +291,6 @@ function SignIn() {
         <Button onClick={handleSignOut} disabled={signingOut}>
           Sign out
         </Button>
-      )}
-      {session && (
-        <div className="my-2 p-2 text-xs overflow-x-scroll bg-gray-100 rounded-lg font-mono">
-          <div className="font-semibold text-gray-500 mb-1">Session</div>
-          <div className="whitespace-pre">
-            {JSON.stringify(session, null, 2)}
-          </div>
-        </div>
-      )}
-      {signInFailure && !signingIn && (
-        <div className="my-2 p-2 text-xs overflow-x-scroll bg-gray-100 rounded-lg font-mono">
-          <div className="font-semibold text-gray-500 mb-1">SIWF Result</div>
-          <div className="whitespace-pre">{signInFailure}</div>
-        </div>
-      )}
-      {signInResult && !signingIn && (
-        <div className="my-2 p-2 text-xs overflow-x-scroll bg-gray-100 rounded-lg font-mono">
-          <div className="font-semibold text-gray-500 mb-1">SIWF Result</div>
-          <div className="whitespace-pre">
-            {JSON.stringify(signInResult, null, 2)}
-          </div>
-        </div>
       )}
     </>
   );
