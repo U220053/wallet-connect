@@ -595,6 +595,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
         address: CASINO_CONTRACT,
         functionName: "buySpins",
         args: [BigInt(1), BigInt(1e18)],
+        value: BigInt(1e18),
       });
 
       if (result !== undefined) {
@@ -892,6 +893,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
       <div className="w-1/3 text-center flex flex-col items-center justify-center">
         <p className="mb-2">
           Available Spins: {userData ? Number(userData[1]) : 0}
+          {userData && !userData[0] ? " (Closed)" : ""}
         </p>
         <div className="mb-4 w-[300px]">
           <input
