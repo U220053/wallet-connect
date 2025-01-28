@@ -594,7 +594,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
         abi: CASINO_ABI,
         address: CASINO_CONTRACT,
         functionName: "buySpins",
-        args: [BigInt(1), BigInt(100000000)],
+        args: [BigInt(1), BigInt(1e18)],
       });
 
       if (result !== undefined) {
