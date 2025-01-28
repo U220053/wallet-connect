@@ -300,14 +300,20 @@ const Main: React.FC = () => {
         >
           <div className="w-[300px] mx-auto py-2 px-2">
             <div>
-              <h2 className="font-2xl font-bold">Actions</h2>
-
+              {/* <h2 className="font-2xl font-bold">Actions</h2> */}
+              {isContextOpen && (
+                <div className="p-4 mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                  <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
+                    {JSON.stringify(context, null, 2)}
+                  </pre>
+                </div>
+              )}
               <div className="mb-4">
-                <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
+                {/* <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
                   <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
                     sdk.actions.signIn
                   </pre>
-                </div>
+                </div> */}
                 <SignIn />
               </div>
             </div>
