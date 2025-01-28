@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "./ui/Button";
 import degen from "../app/assets/image 9.svg";
 import Image1 from "../../public/Group16.png";
@@ -12,11 +12,25 @@ import gem from "../app/assets/image 31.png";
 import key from "../app/assets/image 32.png";
 import champion from "../app/assets/image 33.png";
 import coin from "../app/assets/image 34.png";
-import { useAccount } from "wagmi";
+
 import { Dialog } from "primereact/dialog";
 import "./Modal.css";
 import Image from "next/image";
 import { Button2 } from "./ui/Button2";
+import sdk from "@farcaster/frame-sdk";
+import { parseEther } from "viem";
+import { useSession } from "next-auth/react";
+import {
+  useAccount,
+  useSendTransaction,
+  useSignMessage,
+  useSignTypedData,
+  useWaitForTransactionReceipt,
+  useDisconnect,
+  useConnect,
+  useSwitchChain,
+  useChainId,
+} from "wagmi";
 
 interface SlotMachineProps {
   fid: number | undefined;
@@ -24,6 +38,34 @@ interface SlotMachineProps {
 
 // const SlotMachine = () => {
 const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
+  const { address, isConnected } = useAccount();
+  const [txHash, setTxHash] = useState<string | null>(null);
+
+  const {
+    sendTransaction,
+    error: sendTxError,
+    isError: isSendTxError,
+    isPending: isSendTxPending,
+  } = useSendTransaction();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash: txHash as `0x${string}`,
+    });
+  const sendTx = useCallback(() => {
+    sendTransaction(
+      {
+        // call yoink() on Yoink contract
+        to: "0x4bBFD120d9f352A0BEd7a014bd67913a2007a878",
+        data: "0x9846cd9efc000023c0",
+      },
+      {
+        onSuccess: (hash) => {
+          setTxHash(hash);
+        },
+      }
+    );
+  }, [sendTransaction]);
+
   const symbolMapping = {
     globe: 1,
     bomb: 2,
@@ -135,7 +177,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [amount, setAmount] = useState<string>("");
-  const { address, isConnected } = useAccount();
 
   useEffect(() => {
     console.log("input", amount);
@@ -305,7 +346,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="font-redhat text-2xl font-black leading-[60.24px] text-left animate-bounce flex flex-col items-center">
-        <p>address:{address}</p>
         <p className="mr-2 bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent ">
           JACKPOT
         </p>
@@ -374,12 +414,25 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
         </div>
 
         <Button
-          // onClick={spin}
-          disabled={spinning || fid === undefined}
+          onClick={sendTx}
+          disabled={spinning || fid === undefined || isSendTxPending}
           className="mb-4"
         >
           BUY
         </Button>
+        {txHash && (
+          <div className="mt-2 text-xs">
+            <div>Hash: (txHash)</div>
+            <div>
+              Status:{" "}
+              {isConfirming
+                ? "Confirming..."
+                : isConfirmed
+                ? "Confirmed!"
+                : "Pending"}
+            </div>
+          </div>
+        )}
 
         <Button2
           onClick={spin}

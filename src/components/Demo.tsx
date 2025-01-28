@@ -11,6 +11,17 @@ import sdk, {
   SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
+import {
+  useAccount,
+  useSendTransaction,
+  useSignMessage,
+  useSignTypedData,
+  useWaitForTransactionReceipt,
+  useDisconnect,
+  useConnect,
+  useSwitchChain,
+  useChainId,
+} from "wagmi";
 
 import { config } from "~/components/providers/WagmiProvider";
 import { Button } from "~/components/ui/Button";
@@ -22,6 +33,9 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 
 const Main: React.FC = () => {
+  const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { connect } = useConnect();
   const { status: farcasterStatus, data: session } = useSession();
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
@@ -162,6 +176,7 @@ const Main: React.FC = () => {
         <ConnectButton />
       </div>
       */}
+
         <div
           style={{
             paddingTop: context?.client.safeAreaInsets?.top ?? 0,
@@ -185,6 +200,17 @@ const Main: React.FC = () => {
               <div className="mb-4">
                 <SignIn />
               </div>
+            </div>
+            <div className="mb-4">
+              <Button
+                onClick={() =>
+                  isConnected
+                    ? disconnect()
+                    : connect({ connector: config.connectors[0] })
+                }
+              >
+                {isConnected ? "Disconnect" : "Connect"}
+              </Button>
             </div>
             <div className="mb-20"></div>
           </div>

@@ -20,9 +20,7 @@ export function Providers({
 }) {
   return (
     <SessionProvider session={session}>
-      {/* <WagmiProvider> */}
-      {children}
-      {/* </WagmiProvider> */}
+      <WagmiProvider>{children}</WagmiProvider>
     </SessionProvider>
   );
 }
