@@ -529,7 +529,8 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 
-const CASINO_CONTRACT = "YOUR_CONTRACT_ADDRESS" as `0x${string}`;
+const CASINO_CONTRACT =
+  "0x9e43FE516317FD888E863EEd0562D97f2901943c" as `0x${string}`;
 const CASINO_ABI = [
   {
     type: "function",
@@ -537,6 +538,16 @@ const CASINO_ABI = [
     inputs: [{ name: "_SpinNums", type: "uint256", internalType: "uint256" }],
     outputs: [{ name: "", type: "bool", internalType: "bool" }],
     stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "buySpins",
+    inputs: [
+      { name: "_SpinNums", type: "uint256", internalType: "uint256" },
+      { name: "_amount", type: "uint256", internalType: "uint256" },
+    ],
+    outputs: [{ name: "", type: "bool", internalType: "bool" }],
+    stateMutability: "payable",
   },
   {
     type: "function",
@@ -569,7 +580,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   });
 
   // Updated contract writes
-  const { writeContract: buySpinsErc20, isPending: isBuyingSpins } =
+  const { writeContract: buySpins, isPending: isBuyingSpins } =
     useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -579,11 +590,11 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
 
   const handleBuySpins = async () => {
     try {
-      const result = await buySpinsErc20({
+      const result = buySpins({
         abi: CASINO_ABI,
         address: CASINO_CONTRACT,
-        functionName: "buySpinsErc20",
-        args: [BigInt(spinCount)],
+        functionName: "buySpins",
+        args: [BigInt(1), BigInt(100000000)],
       });
 
       if (result !== undefined) {
