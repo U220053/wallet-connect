@@ -615,7 +615,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
         args: [BigInt(spinCount), BigInt(1e18)],
         value: BigInt(1e18),
       });
-
+      console.log("result", result);
       if (result !== undefined) {
         setTxHash(result); // Set the transaction hash
         console.log("Transaction hash:", result);
