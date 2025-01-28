@@ -21,8 +21,9 @@ import {
   useConnect,
   useSwitchChain,
   useChainId,
+  useWriteContract,
 } from "wagmi";
-
+import buyAbi from "~/abi/Casino.json";
 import { config } from "~/components/providers/WagmiProvider";
 import { Button } from "~/components/ui/Button";
 import { truncateAddress } from "~/lib/truncateAddress";
@@ -55,9 +56,6 @@ const Main: React.FC = () => {
   useEffect(() => {
     setNotificationDetails(context?.client.notificationDetails ?? null);
   }, [context]);
-
-  //   switchChain({ chainId: chainId === base.id ? optimism.id : base.id });
-  // }, [switchChain, chainId]);
 
   useEffect(() => {
     const load = async () => {
@@ -225,6 +223,7 @@ const Main: React.FC = () => {
           </div>
           <div className="container h-3/4">
             <SlotMachine fid={context?.user?.fid} />
+            {/* <SlotMachine /> */}
           </div>
         </div>
       </div>
