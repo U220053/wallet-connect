@@ -11,17 +11,17 @@ import sdk, {
   SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
-import {
-  useAccount,
-  useSendTransaction,
-  useSignMessage,
-  useSignTypedData,
-  useWaitForTransactionReceipt,
-  useDisconnect,
-  useConnect,
-  useSwitchChain,
-  useChainId,
-} from "wagmi";
+// import {
+//   useAccount,
+//   useSendTransaction,
+//   useSignMessage,
+//   useSignTypedData,
+//   useWaitForTransactionReceipt,
+//   useDisconnect,
+//   useConnect,
+//   useSwitchChain,
+//   useChainId,
+// } from "wagmi";
 
 import { config } from "~/components/providers/WagmiProvider";
 import { Button } from "~/components/ui/Button";
@@ -53,41 +53,41 @@ const Main: React.FC = () => {
     setNotificationDetails(context?.client.notificationDetails ?? null);
   }, [context]);
 
-  const { address, isConnected } = useAccount();
-  const chainId = useChainId();
+  // const { address, isConnected } = useAccount();
+  // const chainId = useChainId();
 
-  const {
-    sendTransaction,
-    error: sendTxError,
-    isError: isSendTxError,
-    isPending: isSendTxPending,
-  } = useSendTransaction();
+  // const {
+  //   sendTransaction,
+  //   error: sendTxError,
+  //   isError: isSendTxError,
+  //   isPending: isSendTxPending,
+  // } = useSendTransaction();
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash: txHash as `0x${string}`,
-    });
+  // const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  //   useWaitForTransactionReceipt({
+  //     hash: txHash as `0x${string}`,
+  //   });
 
-  const {
-    signTypedData,
-    error: signTypedError,
-    isError: isSignTypedError,
-    isPending: isSignTypedPending,
-  } = useSignTypedData();
+  // const {
+  //   signTypedData,
+  //   error: signTypedError,
+  //   isError: isSignTypedError,
+  //   isPending: isSignTypedPending,
+  // } = useSignTypedData();
 
-  const { disconnect } = useDisconnect();
-  const { connect } = useConnect();
+  // const { disconnect } = useDisconnect();
+  // const { connect } = useConnect();
 
-  const {
-    switchChain,
-    error: switchChainError,
-    isError: isSwitchChainError,
-    isPending: isSwitchChainPending,
-  } = useSwitchChain();
+  // const {
+  //   switchChain,
+  //   error: switchChainError,
+  //   isError: isSwitchChainError,
+  //   isPending: isSwitchChainPending,
+  // } = useSwitchChain();
 
-  const handleSwitchChain = useCallback(() => {
-    switchChain({ chainId: chainId === base.id ? optimism.id : base.id });
-  }, [switchChain, chainId]);
+  // const handleSwitchChain = useCallback(() => {
+  //   switchChain({ chainId: chainId === base.id ? optimism.id : base.id });
+  // }, [switchChain, chainId]);
 
   useEffect(() => {
     const load = async () => {
@@ -222,27 +222,27 @@ const Main: React.FC = () => {
     }
   }, [context, notificationDetails]);
 
-  const sendTx = useCallback(() => {
-    sendTransaction(
-      {
-        // call yoink() on Yoink contract
-        to: "0x4bBFD120d9f352A0BEd7a014bd67913a2007a878",
-        data: "0x9846cd9efc000023c0",
-      },
-      {
-        onSuccess: (hash) => {
-          setTxHash(hash);
-        },
-      }
-    );
-  }, [sendTransaction]);
+  // const sendTx = useCallback(() => {
+  //   sendTransaction(
+  //     {
+  //       // call yoink() on Yoink contract
+  //       to: "0x4bBFD120d9f352A0BEd7a014bd67913a2007a878",
+  //       data: "0x9846cd9efc000023c0",
+  //     },
+  //     {
+  //       onSuccess: (hash) => {
+  //         setTxHash(hash);
+  //       },
+  //     }
+  //   );
+  // }, [sendTransaction]);
   const renderUserInfo = () => {
     return (
       <div className="mb-4 p-4 bg-gray-800 rounded-lg">
         <h3 className="text-xl font-bold mb-2">User Info</h3>
         <div className="space-y-2">
-          <p>Wallet Status: {isConnected ? "Connected" : "Not Connected"}</p>
-          <p>Wallet Address: {address || "Not Connected"}</p>
+          {/* <p>Wallet Status: {isConnected ? "Connected" : "Not Connected"}</p>
+          <p>Wallet Address: {address || "Not Connected"}</p> */}
           <p>Farcaster Status: {farcasterStatus}</p>
           {session?.user && (
             <div>
@@ -253,22 +253,22 @@ const Main: React.FC = () => {
       </div>
     );
   };
-  const signTyped = useCallback(() => {
-    signTypedData({
-      domain: {
-        name: "Frames v2 Demo",
-        version: "1",
-        chainId,
-      },
-      types: {
-        Message: [{ name: "content", type: "string" }],
-      },
-      message: {
-        content: "Hello from Frames v2!",
-      },
-      primaryType: "Message",
-    });
-  }, [chainId, signTypedData]);
+  // const signTyped = useCallback(() => {
+  //   signTypedData({
+  //     domain: {
+  //       name: "Frames v2 Demo",
+  //       version: "1",
+  //       chainId,
+  //     },
+  //     types: {
+  //       Message: [{ name: "content", type: "string" }],
+  //     },
+  //     message: {
+  //       content: "Hello from Frames v2!",
+  //     },
+  //     primaryType: "Message",
+  //   });
+  // }, [chainId, signTypedData]);
 
   const toggleContext = useCallback(() => {
     setIsContextOpen((prev) => !prev);
@@ -280,8 +280,6 @@ const Main: React.FC = () => {
   return (
     <div className=" min-h-screen flex items-center justify-center  text-white bg-[#2C0653] bg-[url(/DegenCasinoBg.gif)] bg-cover bg-no-repeat bg-center">
       <div className="container flex flex-col">
-        <div>{address}</div>
-        <div>{isConnected}</div>
         {renderUserInfo()}
 
         {/* Uncomment the below code if ConnectButton is needed */}
@@ -304,7 +302,8 @@ const Main: React.FC = () => {
 
               <div className="p-4 mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
                 <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                  {JSON.stringify(context, null, 2)}
+                  {/* {JSON.stringify(context, null, 2)} */}
+                  {context?.user?.fid}
                 </pre>
               </div>
 
@@ -371,46 +370,46 @@ const Main: React.FC = () => {
 
 export default Main;
 
-function SignMessage() {
-  const { isConnected } = useAccount();
-  const { connectAsync } = useConnect();
-  const {
-    signMessage,
-    data: signature,
-    error: signError,
-    isError: isSignError,
-    isPending: isSignPending,
-  } = useSignMessage();
+// function SignMessage() {
+//   const { isConnected } = useAccount();
+//   const { connectAsync } = useConnect();
+//   const {
+//     signMessage,
+//     data: signature,
+//     error: signError,
+//     isError: isSignError,
+//     isPending: isSignPending,
+//   } = useSignMessage();
 
-  const handleSignMessage = useCallback(async () => {
-    if (!isConnected) {
-      await connectAsync({
-        chainId: base.id,
-        connector: config.connectors[0],
-      });
-    }
+//   const handleSignMessage = useCallback(async () => {
+//     if (!isConnected) {
+//       await connectAsync({
+//         chainId: base.id,
+//         connector: config.connectors[0],
+//       });
+//     }
 
-    signMessage({ message: "Hello from Frames v2!" });
-  }, [connectAsync, isConnected, signMessage]);
+//     signMessage({ message: "Hello from Frames v2!" });
+//   }, [connectAsync, isConnected, signMessage]);
 
-  return (
-    <>
-      <Button
-        onClick={handleSignMessage}
-        disabled={isSignPending}
-        isLoading={isSignPending}
-      >
-        Sign Message
-      </Button>
-      {isSignError && renderError(signError)}
-      {signature && (
-        <div className="mt-2 text-xs">
-          <div>Signature: {signature}</div>
-        </div>
-      )}
-    </>
-  );
-}
+//   return (
+//     <>
+//       <Button
+//         onClick={handleSignMessage}
+//         disabled={isSignPending}
+//         isLoading={isSignPending}
+//       >
+//         Sign Message
+//       </Button>
+//       {isSignError && renderError(signError)}
+//       {signature && (
+//         <div className="mt-2 text-xs">
+//           <div>Signature: {signature}</div>
+//         </div>
+//       )}
+//     </>
+//   );
+// }
 
 function SignIn() {
   const [signingIn, setSigningIn] = useState(false);
