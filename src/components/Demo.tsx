@@ -146,24 +146,6 @@ const Main: React.FC = () => {
     }
   }, []);
 
-  const renderUserInfo = () => {
-    return (
-      <div className="mb-4 p-4 bg-gray-800 rounded-lg">
-        <h3 className="text-xl font-bold mb-2">User Info</h3>
-        <div className="space-y-2">
-          {/* <p>Wallet Status: {isConnected ? "Connected" : "Not Connected"}</p>
-          <p>Wallet Address: {address || "Not Connected"}</p> */}
-          <p>Farcaster Status: {farcasterStatus}</p>
-          {session?.user && (
-            <div>
-              <p>FID: {session.user.fid}</p>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
   const toggleContext = useCallback(() => {
     setIsContextOpen((prev) => !prev);
   }, []);
@@ -174,8 +156,6 @@ const Main: React.FC = () => {
   return (
     <div className=" min-h-screen flex items-center justify-center  text-white bg-[#2C0653] bg-[url(/DegenCasinoBg.gif)] bg-cover bg-no-repeat bg-center">
       <div className="container flex flex-col">
-        {renderUserInfo()}
-
         {/* Uncomment the below code if ConnectButton is needed */}
         {/*
       <div className="container flex justify-end mt-4 z-10">
@@ -195,18 +175,14 @@ const Main: React.FC = () => {
               {/* <h2 className="font-2xl font-bold">Actions</h2> */}
 
               <div className="p-4 mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
+                <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x- text-black">
                   {/* {JSON.stringify(context, null, 2)} */}
                   {context?.user?.fid}
+                  {context?.user?.username}
                 </pre>
               </div>
 
               <div className="mb-4">
-                {/* <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-                  <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                    sdk.actions.signIn
-                  </pre>
-                </div> */}
                 <SignIn />
               </div>
             </div>
@@ -222,7 +198,7 @@ const Main: React.FC = () => {
             />
           </div>
           <div className="container h-3/4">
-            <SlotMachine />
+            <SlotMachine fid={context?.user?.fid} />
           </div>
         </div>
       </div>

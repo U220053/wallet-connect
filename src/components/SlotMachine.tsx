@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/Button";
 import degen from "../app/assets/image 9.svg";
 import Image1 from "../../public/Group16.png";
@@ -18,7 +18,12 @@ import "./Modal.css";
 import Image from "next/image";
 import { Button2 } from "./ui/Button2";
 
-const SlotMachine = () => {
+interface SlotMachineProps {
+  fid: number | undefined;
+}
+
+// const SlotMachine = () => {
+const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   const symbolMapping = {
     globe: 1,
     bomb: 2,
@@ -129,6 +134,11 @@ const SlotMachine = () => {
   const [prizeAmount, setPrizeAmount] = useState(0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [dialogVisible, setDialogVisible] = useState(false);
+  const [amount, setAmount] = useState<string>("");
+
+  useEffect(() => {
+    console.log("input", amount);
+  }, [amount]);
 
   const checkWinningCombination = async (finalSymbols: any[]) => {
     const combination = finalSymbols.map((item) => item.value);
@@ -348,11 +358,30 @@ const SlotMachine = () => {
       </div>
 
       <div className="w-1/3 text-center flex flex-col items-center justify-center">
-        <p className="mb-2">Spin for 0</p>
+        <p className="mb-2">Spin for 1 degen</p>
+        <div className="mb-4 w-[300px]">
+          <input
+            type="number"
+            placeholder="Enter amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="bg-white text-black  placeholder-black border-none"
+            min="0"
+            step="0.01"
+          />
+        </div>
+
+        <Button
+          // onClick={spin}
+          disabled={spinning || fid === undefined}
+          className="mb-4"
+        >
+          BUY
+        </Button>
 
         <Button2
           onClick={spin}
-          disabled={spinning}
+          disabled={spinning || fid === undefined}
           className="text-lg text-white w-[300px] h-[50px] bg-gradient-to-r from-[#D9D9D9] to-[#8B5CF6] shadow-[0_8px_#264BAC,0_60px_25px_rgba(66,112,234,0.19)] transform"
           style={{
             clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
