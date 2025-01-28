@@ -135,6 +135,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [amount, setAmount] = useState<string>("");
+  const { address, isConnected } = useAccount();
 
   useEffect(() => {
     console.log("input", amount);
@@ -304,6 +305,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="font-redhat text-2xl font-black leading-[60.24px] text-left animate-bounce flex flex-col items-center">
+        <p>address:{address}</p>
         <p className="mr-2 bg-gradient-to-b from-white to-[#8B5CF6] bg-clip-text text-transparent ">
           JACKPOT
         </p>
