@@ -1,4 +1,4 @@
-body {
+/* body {
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -57,4 +57,27 @@ button {
   bottom: 0;
   width: 100%;
   text-align: center;
+} */
+.door {
+  background: #fafafa;
+  width: 112px; /* w-28 in Tailwind */
+  height: 120px;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  margin: 5px;
 }
+
+.boxes {
+  transition: transform 0.5s ease-in-out;
+}
+
+.box {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+/* Remove any fixed heights from other elements to allow proper centering */

@@ -138,80 +138,222 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   ];
 
   // Modified items array to ensure each item has both element and value
+  // const baseItems = [
+  //   {
+  //     element: (
+  //       <Image
+  //         src={globe}
+  //         alt="globe"
+  //         className="w-full h-8rem object-contain"
+  //       />
+  //     ),
+  //     value: symbolMapping.globe,
+  //   },
+  //   {
+  //     element: (
+  //       <Image src={bomb} alt="bomb" className="w-full h-8rem object-contain" />
+  //     ),
+  //     value: symbolMapping.bomb,
+  //   },
+  //   {
+  //     element: (
+  //       <Image src={book} alt="book" className="w-full h-8rem object-contain" />
+  //     ),
+  //     value: symbolMapping.book,
+  //   },
+  //   {
+  //     element: (
+  //       <Image
+  //         src={broom}
+  //         alt="broom"
+  //         className="w-full h-8rem object-contain"
+  //       />
+  //     ),
+  //     value: symbolMapping.broom,
+  //   },
+  //   {
+  //     element: (
+  //       <Image
+  //         src={tonic}
+  //         alt="tonic"
+  //         className="w-full h-8rem object-contain"
+  //       />
+  //     ),
+  //     value: symbolMapping.tonic,
+  //   },
+  //   {
+  //     element: (
+  //       <Image src={gem} alt="gem" className="w-full h-8rem object-contain" />
+  //     ),
+  //     value: symbolMapping.gem,
+  //   },
+  //   {
+  //     element: (
+  //       <Image src={key} alt="key" className="w-full h-8rem object-contain" />
+  //     ),
+  //     value: symbolMapping.key,
+  //   },
+  //   {
+  //     element: (
+  //       <Image
+  //         src={champion}
+  //         alt="champion"
+  //         className="w-full h-8rem object-contain"
+  //       />
+  //     ),
+  //     value: symbolMapping.champion,
+  //   },
+  //   {
+  //     element: (
+  //       <Image src={coin} alt="coin" className="w-full h-8rem object-contain" />
+  //     ),
+  //     value: symbolMapping.coin,
+  //   },
+  //   {
+  //     element: (
+  //       <Image src={hat} alt="coin" className="w-full h-8rem object-contain" />
+  //     ),
+  //     value: symbolMapping.hat,
+  //   },
+  // ];
   const baseItems = [
     {
       element: (
-        <Image
-          src={globe}
-          alt="globe"
-          className="w-full h-8rem object-contain"
-        />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={globe}
+            alt="globe"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.globe,
     },
     {
       element: (
-        <Image src={bomb} alt="bomb" className="w-full h-8rem object-contain" />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={bomb}
+            alt="bomb"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.bomb,
     },
     {
       element: (
-        <Image src={book} alt="book" className="w-full h-8rem object-contain" />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={book}
+            alt="book"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.book,
     },
     {
       element: (
-        <Image
-          src={broom}
-          alt="broom"
-          className="w-full h-8rem object-contain"
-        />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={broom}
+            alt="broom"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.broom,
     },
     {
       element: (
-        <Image
-          src={tonic}
-          alt="tonic"
-          className="w-full h-8rem object-contain"
-        />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={tonic}
+            alt="tonic"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.tonic,
     },
     {
       element: (
-        <Image src={gem} alt="gem" className="w-full h-8rem object-contain" />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={gem}
+            alt="gem"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.gem,
     },
     {
       element: (
-        <Image src={key} alt="key" className="w-full h-8rem object-contain" />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={key}
+            alt="key"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.key,
     },
     {
       element: (
-        <Image
-          src={champion}
-          alt="champion"
-          className="w-full h-8rem object-contain"
-        />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={champion}
+            alt="champion"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.champion,
     },
     {
       element: (
-        <Image src={coin} alt="coin" className="w-full h-8rem object-contain" />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={coin}
+            alt="coin"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.coin,
     },
     {
       element: (
-        <Image src={hat} alt="coin" className="w-full h-8rem object-contain" />
+        <div className="flex items-center justify-center w-full h-full p-2">
+          <Image
+            src={hat}
+            alt="hat"
+            width={60}
+            height={60}
+            className="object-contain max-w-full max-h-full"
+          />
+        </div>
       ),
       value: symbolMapping.hat,
     },
@@ -363,95 +505,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
     }
   };
 
-  // const spin = async () => {
-  //   if (spinning) return;
-
-  //   // Check if user has spins available
-  //   // if (!userData || Number(userData[1]) <= 0) {
-  //   //   console.log("No spins available");
-  //   //   return;
-  //   // }
-
-  //   try {
-  //     // Get the outcome from backend
-  //     const response = await fetch("http://localhost:80/api/spin", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     const { outcome } = await response.json();
-  //     console.log("outcome", outcome);
-  //     // Rest of your existing spin logic...
-  //     const symbols = String(outcome).padStart(3, "0").split("").map(Number);
-
-  //     // Convert the outcome number to symbols
-  //     // Assuming outcome is a 3-digit number where each digit represents a symbol
-
-  //     setSpinning(true);
-  //     setWinner(false);
-  //     setPrizeAmount(0);
-
-  //     setTransitionEnabled(false);
-
-  //     // Update doors with predetermined outcome
-  //     setDoors((prevDoors) =>
-  //       prevDoors.map((door, index) => {
-  //         const newItems = Array.from({ length: ITEMS_TO_SCROLL }, (_, i) => {
-  //           // Use the predetermined symbol for the middle position
-  //           if (i === Math.floor(ITEMS_TO_SCROLL / 2)) {
-  //             return baseItems[symbols[index] % baseItems.length];
-  //           }
-  //           // Random symbols for other positions
-  //           return baseItems[Math.floor(Math.random() * baseItems.length)];
-  //         });
-
-  //         return {
-  //           ...door,
-  //           items: newItems,
-  //           spinning: index === 0,
-  //           stopped: false,
-  //           currentIndex: 0,
-  //         };
-  //       })
-  //     );
-
-  //     setTimeout(() => {
-  //       setTransitionEnabled(true);
-
-  //       doors.forEach((_, index) => {
-  //         setTimeout(() => {
-  //           setDoors((prevDoors) =>
-  //             prevDoors.map((door, doorIndex) => {
-  //               if (doorIndex === index) {
-  //                 const middleIndex = Math.floor(ITEMS_TO_SCROLL / 2);
-  //                 return {
-  //                   ...door,
-  //                   spinning: false,
-  //                   stopped: true,
-  //                   currentIndex: middleIndex,
-  //                 };
-  //               }
-  //               return door;
-  //             })
-  //           );
-
-  //           if (index === doors.length - 1) {
-  //             const finalSymbols = doors.map((door) => {
-  //               const middleIndex = Math.floor(ITEMS_TO_SCROLL / 2);
-  //               return door.items[middleIndex];
-  //             });
-  //             checkWinningCombination(finalSymbols);
-  //             setSpinning(false);
-  //           }
-  //         }, SPIN_DURATION + index * STOP_DELAY);
-  //       });
-  //     }, 50);
-  //   } catch (error) {
-  //     console.error("Error spinning:", error);
-  //     setSpinning(false);
-  //   }
-  // };
   const openDialog = () => {
     setDialogVisible(true);
   };
@@ -459,8 +512,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
   const hideDialog = () => {
     setDialogVisible(false);
   };
-  // Rest of your component code remains the same
-  // ... (symbolMapping, winningCombinations, baseItems, etc.)
 
   return (
     <div className="flex flex-col items-center">
@@ -482,7 +533,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
         </div>
       )}
 
-      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[26rem]">
+      {/* <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[26rem]">
         <div className="flex gap-4 p-12 rounded-lg shadow-lg">
           {doors.map((door, index) => (
             <div
@@ -527,8 +578,53 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ fid }) => {
             </div>
           ))}
         </div>
+      </div> */}
+      <div className="flex flex-col items-center px-8 bg-[url('/box_mobile.png')] bg-contain bg-no-repeat bg-center w-[26rem]">
+        <div className="flex gap-4 p-12 rounded-lg shadow-lg">
+          {doors.map((door, index) => (
+            <div
+              key={index}
+              className="door w-28 h-[120px] overflow-hidden relative bg-opacity-50 backdrop-blur-sm rounded-lg"
+            >
+              <div
+                className={`boxes flex flex-col transition-transform ease-in-out will-change-transform`}
+                style={{
+                  transitionDuration: transitionEnabled
+                    ? `${TRANSITION_DURATION}ms`
+                    : "0ms",
+                  transform:
+                    door.spinning || !door.stopped
+                      ? `translateY(-${door.currentIndex * 120}px)`
+                      : `translateY(-${
+                          Math.floor(ITEMS_TO_SCROLL / 2) * 120
+                        }px)`,
+                }}
+              >
+                {door.items.map((item, itemIndex) => (
+                  <div
+                    key={itemIndex}
+                    className={`box flex items-center justify-center bg-white border-2 
+                    ${
+                      itemIndex === Math.floor(ITEMS_TO_SCROLL / 2)
+                        ? "border-purple-500 shadow-lg"
+                        : "border-gray-200"
+                    }
+                    h-[120px] w-full transition-all duration-200
+                    ${
+                      door.stopped &&
+                      itemIndex === Math.floor(ITEMS_TO_SCROLL / 2)
+                        ? "scale-105"
+                        : "scale-100"
+                    }`}
+                  >
+                    {item.element}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-
       <div className="w-full max-w-md text-center flex flex-col items-center justify-center mt-4">
         <p className="mb-2 text-lg font-medium">
           Available Spins: {userData ? Number(userData[1]) : 0}
